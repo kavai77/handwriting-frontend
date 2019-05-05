@@ -2,11 +2,14 @@ package com.himadri.handwriting;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.appengine.api.utils.SystemProperty;
 import com.googlecode.objectify.ObjectifyService;
 import com.himadri.handwriting.model.Pixels;
 import com.himadri.handwriting.model.Prediction;
 import com.himadri.handwriting.model.PredictionDbEntity;
 import com.maxmind.geoip2.DatabaseReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +20,7 @@ import java.util.List;
 
 @Component
 public class StorageService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StorageService.class);
     private DatabaseReader dbReader;
 
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -51,6 +55,10 @@ public class StorageService {
             .predictions(predictionsJson)
             .createTime(new Date())
             .build();
-        ObjectifyService.ofy().save().entity(entity);
+        if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
+            ObjectifyService.ofy().save().entity(entity);
+        } else {
+            LOGGER.info("Saving {}", entity);
+        }
     }
 }

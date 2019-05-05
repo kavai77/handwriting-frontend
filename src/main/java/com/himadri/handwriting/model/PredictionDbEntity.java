@@ -5,12 +5,14 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.Date;
 
 @Entity
 @Getter
 @Builder
+@ToString
 public class PredictionDbEntity {
     @Id
     private Long id;

@@ -43,7 +43,10 @@
             Have a look at <a href="trainingset.png">this subset of training data</a> for examples
         </small>
         <br>
-        <table class="table">
+        <div class="center hidden" id="loader">
+            <img src="ajax-loader.gif">
+        </div>
+        <table class="table" id="predictionTable">
             <thead>
                 <tr>
                     <th>Method</th>
@@ -86,6 +89,7 @@
                 <option value="gray">gray</option>
             </select>
         </div>
+
 
         <br>
         <button class="btn btn-primary" onclick="javascript:send();return false;">Recognize</button>

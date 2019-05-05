@@ -57,6 +57,10 @@ function clearArea() {
 
 function send() {
     var img = document.getElementById("myCanvas").toDataURL("image/png");
+    var showLoadingTimer = setTimeout(function () {
+        $( "#loader" ).show();
+        $( "#predictionTable" ).hide();
+    }, 1000);
     $.ajax({
       url: "/service/prediction",
       method: "POST",
@@ -65,6 +69,9 @@ function send() {
       data: img
     })
     .done(function( data ) {
+      window.clearTimeout(showLoadingTimer);
+      $( "#loader" ).hide();
+      $( "#predictionTable" ).show();
       for (var i = 0; i < data.length; i++) {
           $('#method' + i).text(data[i].method);
           if (data[i].confidence == null) {

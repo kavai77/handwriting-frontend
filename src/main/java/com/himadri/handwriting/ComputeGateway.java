@@ -23,7 +23,7 @@ public class ComputeGateway {
 
     public List<Prediction> callPredictionHttpClient(Pixels pixels) {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()){
-            HttpPost httpPost = new HttpPost("http://18.224.135.237/service/prediction");
+            HttpPost httpPost = new HttpPost("http://handwriting.himadri.eu/service/prediction");
             PredictionComputeInput input = new PredictionComputeInput(pixels.getTransformedPixels(), pixels.getRawPixels());
             httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(input), ContentType.APPLICATION_JSON));
             CloseableHttpResponse response = httpclient.execute(httpPost);
